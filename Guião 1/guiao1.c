@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <unistd.h> /* chamadas ao sistema: defs e decls essenciais */
 #include <fcntl.h> /* O_RDONLY, O_WRONLY, O_CREAT, O_* */
@@ -63,7 +64,7 @@ int mycp(char* origem, char* destino) {
 		perror("erro");
 	}
 
-	// stdin = 0 , stdout = 1
+	// stdin = 0 , stdout = 1, stderr = 2
 	while((res_read = read(fd_origem, buffer, BUFFER_SIZE)) > 0) {
 
 		ssize_t res_write = write(fd_destino, buffer, res_read);
@@ -79,8 +80,29 @@ int mycp(char* origem, char* destino) {
 	return 0;
 }
 
+/*
+typedef struct pessoa {
+	char nome[50];
+	int idade;
+}Pessoa;
+
+
+int addPessoa(char* nome, int idade) {
+
+	int fd = open("data.bin", O_CREAT | O_TRUNC | O_RDWR, 0640);
+	Pessoa p;
+
+	strcpy(p.nome, nome);
+	p.idade = idade;
+
+	write(fd, &p, sizeof(Pessoa));
+
+	close(fd);
+}
+*/
+
 int main(int argc, char* argv[]) {
-	
-	return mycp(argv[1], argv[2]);
+	int idade = atoi(argv[2]);
+	return addPessoa(argv[1], idade);
 }
 
